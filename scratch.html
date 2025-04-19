@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Climbing</title>
+</head>
+<body>
+    <!-- <p>This is my scratch page. Connect to scrath css page
+        I'll link to other two pages, with style.
+    </p> -->
+    
+    <a href="index.html">Resume Page</a>
+    <a href="webapp.html">Spelling Bee</a>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Passion: Rock Climbing</title>
+    <link rel="stylesheet" href="css/scratch.css">
+</head>
+<body>
+    <div id="top" class="header">
+        <h1>My Passion: Rock Climbing</h1>
+        <p>Climb higher, push limits, and find your summit.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="#reasons">Why Climb?</a> |
+        <a href="#gear">My Gear</a> |
+        <a href="#video">Watch a Climb</a> |
+        <a href="#tableau">Climbing Stats</a> |
+    </div>
+
+    <div id="reasons" class="section">
+        <h2>Why I Love Rock Climbing</h2>
+        <ol>
+            <li>It challenges you mentally and physically</li>
+            <li>It's a full-body workout
+                <ul>
+                    <li>Improves strength and flexibility</li>
+                    <li>Builds problem-solving skills</li>
+                </ul>
+            </li>
+            <li>You get to experience nature in a unique way</li>
+        </ol>
+    </div>
+
+    <div class="section" id="gear">
+        <h2>My Climbing Gear</h2>
+        <ul>
+            <li>Climbing shoes (La Sportiva)</li>
+            <li>Harness and Belay Device</li>
+            <li>Chalk bag and helmet</li>
+        </ul>
+        <img src="assets/img/Rock climber.jpg" alt="Rock climber on cliff" width="500">
+    </div>
+
+    <div class="section" id="video">
+        <h2>Watch This Climb!</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/b6OvrRbGU68" title="Rock climbing video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <div class='tableauPlaceholder' id='viz1744844412557' style='width: 100%; max-width: 950px; height: 700px; margin: 0 auto;'>
+        <noscript>
+            <a href='#'>
+                <img alt='Rock Climbing Dashboard' src='https://public.tableau.com/static/images/Ro/RockClimbingTracker/Dashboard2/1_rss.png' style='border: none' />
+            </a>
+        </noscript>
+
+        <div class="section" id="tableau">
+            <h2>Wellness</h2>
+            <div class='tableauPlaceholder' id='viz1744844566735' style='position: relative'>
+                <noscript><a href='#'><img alt='Dashboard 2 ' src='https://public.tableau.com/static/images/Ro/RockClimbingWellness/Dashboard2/1_rss.png' style='border: none' /></a></noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='RockClimbingWellness/Dashboard2' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Ro/RockClimbingWellness/Dashboard2/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                </object>
+            </div>
+            <script type='text/javascript'>
+                var divElement = document.getElementById('viz1744844566735');
+                var vizElement = divElement.getElementsByTagName('object')[0];
+                if ( divElement.offsetWidth > 800 ) {
+                    vizElement.style.width='1000px';
+                    vizElement.style.height='827px';
+                } else if ( divElement.offsetWidth > 500 ) {
+                    vizElement.style.width='1000px';
+                    vizElement.style.height='827px';
+                } else {
+                    vizElement.style.width='100%';
+                    vizElement.style.height='2227px';
+                }
+                var scriptElement = document.createElement('script');
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+        </div>
+
+    <div class="footer">
+        <a href="#top">Back to top</a>
+    </div>
+</body>
+</html>

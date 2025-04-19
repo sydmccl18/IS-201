@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spelling Bee 🐝</title>
+  <style>
+    body {
+      background-color: #fffbea;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #2d3436;
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .status {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #636e72;
+    }
+
+    .board {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      min-height: 60px;
+    }
+
+    .tile {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #ccc;
+      font-size: 2rem;
+      text-align: center;
+      line-height: 60px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .key {
+      padding: 15px 10px;
+      font-size: 1.1rem;
+      border: none;
+      background-color: #f1c40f;
+      color: #2d3436;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .key:hover {
+      background-color: #f39c12;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      margin: 0 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .submit {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    .backspace {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .words {
+      max-width: 300px;
+      width: 100%;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .words h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .word-list {
+      list-style: none;
+      padding-left: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="scratch.html">Rock Climbing</a>
+  <h1>🐝 Spelling Bee</h1>
+  <div class="status" id="status">Level 1 | Time left: <span id="timer">60</span>s</div>
+
+  <div class="board" id="board"></div>
+  <div class="keyboard" id="keyboard"></div>
+
+  <div class="controls">
+    <button class="btn backspace" onclick="backspace()">⌫</button>
+    <button class="btn submit" onclick="submitWord()">Submit</button>
+  </div>
+
+  <div class="words">
+    <h3>Words Found</h3>
+    <ul class="word-list" id="wordList"></ul>
+  </div>
+
+  <script>
+    const levels = [
+      {
+        letters: ["A", "P", "L", "E"],
+        required: "P",
+        words: ["apple", "lap", "pal", "plea", "leap"]
+      },
+      {
+        letters: ["S", "T", "A", "R", "E"],
+        required: "A",
+        words: ["star", "rate", "ear", "tears", "are", "arts"]
+      },
+      {
+        letters: ["M", "O", "U", "S", "E"],
+        required: "U",
+        words: ["mouse", "use", "sum", "emu", "some"]
+      }
+    ];
+
+    let currentLevel = 0;
+    let currentWord = "";
+    let foundWords = [];
+    let timer;
+    let timeLeft = 60;
+
+    const board = document.getElementById("board");
+    const keyboard = document.getElementById("keyboard");
+    const wordList = document.getElementById("wordList");
+    const status = document.getElementById("status");
+    const timerEl = document.getElementById("timer");
+
+    function startLevel() {
+      clearInterval(timer);
+      currentWord = "";
+      foundWords = [];
+      wordList.innerHTML = "";
+      updateBoard();
+      buildKeyboard();
+      startTimer();
+      updateStatus();
+    }
+
+    function buildKeyboard() {
+      keyboard.innerHTML = "";
+      levels[currentLevel].letters.forEach(letter => {
+        const btn = document.createElement("button");
+        btn.className = "key";
+        btn.textContent = letter;
+        btn.onclick = () => addLetter(letter);
+        keyboard.appendChild(btn);
+      });
+    }
+
+    function updateBoard() {
+      board.innerHTML = "";
+      for (let i = 0; i < currentWord.length; i++) {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.textContent = currentWord[i];
+        board.appendChild(tile);
+      }
+    }
+
+    function updateStatus() {
+      status.innerHTML = `Level ${currentLevel + 1} | Time left: <span id="timer">${timeLeft}</span>s`;
+    }
+
+    function startTimer() {
+      timeLeft = 60;
+      updateStatus();
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          nextLevel();
+        }
+      }, 1000);
+    }
+
+    function addLetter(letter) {
+      currentWord += letter;
+      updateBoard();
+    }
+
+    function backspace() {
+      currentWord = currentWord.slice(0, -1);
+      updateBoard();
+    }
+
+    function submitWord() {
+      const levelData = levels[currentLevel];
+      const wordLower = currentWord.toLowerCase();
+
+      if (currentWord.length < 3) {
+        alert("Too short!");
+      } else if (!currentWord.includes(levelData.required)) {
+        alert(`You must use the letter "${levelData.required}"`);
+      } else if (!levelData.words.includes(wordLower)) {
+        alert("Not in word list.");
+      } else if (foundWords.includes(wordLower)) {
+        alert("Already found!");
+      } else {
+        foundWords.push(wordLower);
+        const li = document.createElement("li");
+        li.textContent = currentWord;
+        wordList.appendChild(li);
+      }
+
+      currentWord = "";
+      updateBoard();
+
+      // If all words found, move to next level
+      if (foundWords.length === levelData.words.length) {
+        clearInterval(timer);
+        setTimeout(() => {
+          alert("Level complete!");
+          nextLevel();
+        }, 500);
+      }
+    }
+
+    function nextLevel() {
+      currentLevel++;
+      if (currentLevel >= levels.length) {
+        alert("🎉 You finished all levels!");
+        currentLevel = 0;
+      }
+      startLevel();
+    }
+
+    startLevel();
+  </script>
+</body>
+</html>
